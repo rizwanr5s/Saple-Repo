@@ -1,0 +1,413 @@
+Action()
+{
+
+	lr_start_transaction("LoginPage");
+	
+	web_url("index.htm", 
+		"URL=http://127.0.0.1:1080/WebTours/index.htm", 
+		"Resource=0", 
+		"RecContentType=text/html", 
+		"Referer=", 
+		"Snapshot=t1.inf", 
+		"Mode=HTTP", 
+		LAST);
+
+	web_url("header.html", 
+		"URL=http://127.0.0.1:1080/WebTours/header.html", 
+		"Resource=0", 
+		"RecContentType=text/html", 
+		"Referer=http://127.0.0.1:1080/WebTours/index.htm", 
+		"Snapshot=t2.inf", 
+		"Mode=HTTP", 
+		LAST);
+
+	web_url("hp_logo.png", 
+		"URL=http://127.0.0.1:1080/WebTours/images/hp_logo.png", 
+		"Resource=1", 
+		"RecContentType=image/png", 
+		"Referer=http://127.0.0.1:1080/WebTours/header.html", 
+		"Snapshot=t3.inf", 
+		LAST);
+
+	web_url("welcome.pl", 
+		"URL=http://127.0.0.1:1080/cgi-bin/welcome.pl?signOff=true", 
+		"Resource=0", 
+		"RecContentType=text/html", 
+		"Referer=http://127.0.0.1:1080/WebTours/index.htm", 
+		"Snapshot=t4.inf", 
+		"Mode=HTTP", 
+		LAST);
+
+	web_url("webtours.png", 
+		"URL=http://127.0.0.1:1080/WebTours/images/webtours.png", 
+		"Resource=1", 
+		"RecContentType=image/png", 
+		"Referer=http://127.0.0.1:1080/WebTours/header.html", 
+		"Snapshot=t5.inf", 
+		LAST);
+
+	web_url("home.html", 
+		"URL=http://127.0.0.1:1080/WebTours/home.html", 
+		"Resource=0", 
+		"RecContentType=text/html", 
+		"Referer=http://127.0.0.1:1080/cgi-bin/welcome.pl?signOff=true", 
+		"Snapshot=t6.inf", 
+		"Mode=HTTP", 
+		LAST);
+	
+	web_reg_save_param("sessionID", "LB=<input type=\"hidden\" name=\"userSession\" value=\"", "RB=\"/>", "ORD=1", LAST);
+
+	web_url("nav.pl", 
+		"URL=http://127.0.0.1:1080/cgi-bin/nav.pl?in=home", 
+		"Resource=0", 
+		"RecContentType=text/html", 
+		"Referer=http://127.0.0.1:1080/cgi-bin/welcome.pl?signOff=true", 
+		"Snapshot=t7.inf", 
+		"Mode=HTTP", 
+		LAST);
+
+	web_url("mer_login.gif", 
+		"URL=http://127.0.0.1:1080/WebTours/images/mer_login.gif", 
+		"Resource=1", 
+		"RecContentType=image/gif", 
+		"Referer=http://127.0.0.1:1080/cgi-bin/nav.pl?in=home", 
+		"Snapshot=t8.inf", 
+		LAST);
+	
+	lr_end_transaction("LoginPage",LR_AUTO);
+	
+	lr_think_time(5);
+	
+	lr_start_transaction("login");
+
+	web_submit_data("login.pl", 
+		"Action=http://127.0.0.1:1080/cgi-bin/login.pl", 
+		"Method=POST", 
+		"RecContentType=text/html", 
+		"Referer=http://127.0.0.1:1080/cgi-bin/nav.pl?in=home", 
+		"Snapshot=t9.inf", 
+		"Mode=HTTP", 
+		ITEMDATA, 
+		"Name=userSession", "Value={sessionID}", ENDITEM, 
+		"Name=username", "Value={username}", ENDITEM, 
+		"Name=password", "Value={password}", ENDITEM, 
+		"Name=login.x", "Value=53", ENDITEM, 
+		"Name=login.y", "Value=3", ENDITEM, 
+		"Name=login", "Value=Login", ENDITEM, 
+		"Name=JSFormSubmit", "Value=off", ENDITEM, 
+		LAST);
+	
+	web_reg_find("Text=Web Tours Error - Incorrect Password",
+        "SaveCount=Welcome_Count",
+        LAST );
+	if(atoi(lr_eval_string("{Welcome_Count}")) > 0) {
+	lr_error_message("Login Successfull");
+	} else {
+		lr_output_message("Login successful");
+	}
+
+	web_url("nav.pl_2", 
+		"URL=http://127.0.0.1:1080/cgi-bin/nav.pl?page=menu&in=home", 
+		"Resource=0", 
+		"RecContentType=text/html", 
+		"Referer=http://127.0.0.1:1080/cgi-bin/login.pl", 
+		"Snapshot=t10.inf", 
+		"Mode=HTTP", 
+		LAST);
+
+	web_url("flights.gif", 
+		"URL=http://127.0.0.1:1080/WebTours/images/flights.gif", 
+		"Resource=1", 
+		"RecContentType=image/gif", 
+		"Referer=http://127.0.0.1:1080/cgi-bin/nav.pl?page=menu&in=home", 
+		"Snapshot=t11.inf", 
+		LAST);
+
+	web_url("in_home.gif", 
+		"URL=http://127.0.0.1:1080/WebTours/images/in_home.gif", 
+		"Resource=1", 
+		"RecContentType=image/gif", 
+		"Referer=http://127.0.0.1:1080/cgi-bin/nav.pl?page=menu&in=home", 
+		"Snapshot=t12.inf", 
+		LAST);
+
+	web_url("itinerary.gif", 
+		"URL=http://127.0.0.1:1080/WebTours/images/itinerary.gif", 
+		"Resource=1", 
+		"RecContentType=image/gif", 
+		"Referer=http://127.0.0.1:1080/cgi-bin/nav.pl?page=menu&in=home", 
+		"Snapshot=t13.inf", 
+		LAST);
+
+	web_url("signoff.gif", 
+		"URL=http://127.0.0.1:1080/WebTours/images/signoff.gif", 
+		"Resource=1", 
+		"RecContentType=image/gif", 
+		"Referer=http://127.0.0.1:1080/cgi-bin/nav.pl?page=menu&in=home", 
+		"Snapshot=t14.inf", 
+		LAST);
+
+	web_url("login.pl_2", 
+		"URL=http://127.0.0.1:1080/cgi-bin/login.pl?intro=true", 
+		"Resource=0", 
+		"RecContentType=text/html", 
+		"Referer=http://127.0.0.1:1080/cgi-bin/login.pl", 
+		"Snapshot=t15.inf", 
+		"Mode=HTTP", 
+		LAST);
+
+	lr_end_transaction("login",LR_AUTO);
+
+	lr_think_time(5);
+
+	lr_start_transaction("flights");
+
+	web_url("Search Flights Button", 
+		"URL=http://127.0.0.1:1080/cgi-bin/welcome.pl?page=search", 
+		"Resource=0", 
+		"RecContentType=text/html", 
+		"Referer=http://127.0.0.1:1080/cgi-bin/nav.pl?page=menu&in=home", 
+		"Snapshot=t16.inf", 
+		"Mode=HTTP", 
+		LAST);
+
+	web_url("nav.pl_3", 
+		"URL=http://127.0.0.1:1080/cgi-bin/nav.pl?page=menu&in=flights", 
+		"Resource=0", 
+		"RecContentType=text/html", 
+		"Referer=http://127.0.0.1:1080/cgi-bin/welcome.pl?page=search", 
+		"Snapshot=t17.inf", 
+		"Mode=HTTP", 
+		LAST);
+
+	web_url("home.gif", 
+		"URL=http://127.0.0.1:1080/WebTours/images/home.gif", 
+		"Resource=1", 
+		"RecContentType=image/gif", 
+		"Referer=http://127.0.0.1:1080/cgi-bin/nav.pl?page=menu&in=flights", 
+		"Snapshot=t18.inf", 
+		LAST);
+
+	web_url("in_flights.gif", 
+		"URL=http://127.0.0.1:1080/WebTours/images/in_flights.gif", 
+		"Resource=1", 
+		"RecContentType=image/gif", 
+		"Referer=http://127.0.0.1:1080/cgi-bin/nav.pl?page=menu&in=flights", 
+		"Snapshot=t19.inf", 
+		LAST);
+
+	web_url("reservations.pl", 
+		"URL=http://127.0.0.1:1080/cgi-bin/reservations.pl?page=welcome", 
+		"Resource=0", 
+		"RecContentType=text/html", 
+		"Referer=http://127.0.0.1:1080/cgi-bin/welcome.pl?page=search", 
+		"Snapshot=t20.inf", 
+		"Mode=HTTP", 
+		LAST);
+
+	web_url("button_next.gif", 
+		"URL=http://127.0.0.1:1080/WebTours/images/button_next.gif", 
+		"Resource=1", 
+		"RecContentType=image/gif", 
+		"Referer=http://127.0.0.1:1080/cgi-bin/reservations.pl?page=welcome", 
+		"Snapshot=t21.inf", 
+		LAST);
+
+	lr_end_transaction("flights",LR_AUTO);
+
+	lr_think_time(5);
+
+	lr_start_transaction("find flights");
+
+	web_submit_data("reservations.pl_2", 
+		"Action=http://127.0.0.1:1080/cgi-bin/reservations.pl", 
+		"Method=POST", 
+		"RecContentType=text/html", 
+		"Referer=http://127.0.0.1:1080/cgi-bin/reservations.pl?page=welcome", 
+		"Snapshot=t22.inf", 
+		"Mode=HTTP", 
+		ITEMDATA, 
+		"Name=advanceDiscount", "Value=0", ENDITEM, 
+		"Name=depart", "Value={fromplace}", ENDITEM, 
+		"Name=departDate", "Value={fromdate}", ENDITEM, 
+		"Name=arrive", "Value={toplace}", ENDITEM, 
+		"Name=returnDate", "Value={todate}", ENDITEM, 
+		"Name=numPassengers", "Value=1", ENDITEM, 
+		"Name=seatPref", "Value=None", ENDITEM, 
+		"Name=seatType", "Value=Coach", ENDITEM, 
+		"Name=findFlights.x", "Value=56", ENDITEM, 
+		"Name=findFlights.y", "Value=1", ENDITEM, 
+		"Name=.cgifields", "Value=roundtrip", ENDITEM, 
+		"Name=.cgifields", "Value=seatType", ENDITEM, 
+		"Name=.cgifields", "Value=seatPref", ENDITEM, 
+		LAST);
+
+	web_submit_data("reservations.pl_3", 
+		"Action=http://127.0.0.1:1080/cgi-bin/reservations.pl", 
+		"Method=POST", 
+		"RecContentType=text/html", 
+		"Referer=http://127.0.0.1:1080/cgi-bin/reservations.pl", 
+		"Snapshot=t23.inf", 
+		"Mode=HTTP", 
+		ITEMDATA, 
+		"Name=outboundFlight", "Value=240;108;{fromdate}", ENDITEM, 
+		"Name=numPassengers", "Value=1", ENDITEM, 
+		"Name=advanceDiscount", "Value=0", ENDITEM, 
+		"Name=seatType", "Value=Coach", ENDITEM, 
+		"Name=seatPref", "Value=None", ENDITEM, 
+		"Name=reserveFlights.x", "Value=35", ENDITEM, 
+		"Name=reserveFlights.y", "Value=10", ENDITEM, 
+		LAST);
+
+	lr_end_transaction("find flights",LR_AUTO);
+
+	lr_think_time(5);
+
+	lr_start_transaction("payment details");
+
+	web_submit_data("reservations.pl_4", 
+		"Action=http://127.0.0.1:1080/cgi-bin/reservations.pl", 
+		"Method=POST", 
+		"RecContentType=text/html", 
+		"Referer=http://127.0.0.1:1080/cgi-bin/reservations.pl", 
+		"Snapshot=t24.inf", 
+		"Mode=HTTP", 
+		ITEMDATA, 
+		"Name=firstName", "Value=dhdsjhfjhjsd", ENDITEM, 
+		"Name=lastName", "Value=jhdjshjdh", ENDITEM, 
+		"Name=address1", "Value=djshjkhdhskdkshakdhkak", ENDITEM, 
+		"Name=address2", "Value=nchdskjhfkdshkk", ENDITEM, 
+		"Name=pass1", "Value=dhdsjhfjhjsd jhdjshjdh", ENDITEM, 
+		"Name=creditCard", "Value=45789632147858585465", ENDITEM, 
+		"Name=expDate", "Value=45632", ENDITEM, 
+		"Name=oldCCOption", "Value=", ENDITEM, 
+		"Name=numPassengers", "Value=1", ENDITEM, 
+		"Name=seatType", "Value=Coach", ENDITEM, 
+		"Name=seatPref", "Value=None", ENDITEM, 
+		"Name=outboundFlight", "Value=240;108;{fromdate}", ENDITEM, 
+		"Name=advanceDiscount", "Value=0", ENDITEM, 
+		"Name=returnFlight", "Value=", ENDITEM, 
+		"Name=JSFormSubmit", "Value=off", ENDITEM, 
+		"Name=buyFlights.x", "Value=37", ENDITEM, 
+		"Name=buyFlights.y", "Value=11", ENDITEM, 
+		"Name=.cgifields", "Value=saveCC", ENDITEM, 
+		LAST);
+
+	web_url("bookanother.gif", 
+		"URL=http://127.0.0.1:1080/WebTours/images/bookanother.gif", 
+		"Resource=1", 
+		"RecContentType=image/gif", 
+		"Referer=http://127.0.0.1:1080/cgi-bin/reservations.pl", 
+		"Snapshot=t25.inf", 
+		LAST);
+
+	lr_end_transaction("payment details",LR_AUTO);
+
+	lr_think_time(5);
+
+	lr_start_transaction("itinerary");
+
+	web_url("Itinerary Button", 
+		"URL=http://127.0.0.1:1080/cgi-bin/welcome.pl?page=itinerary", 
+		"Resource=0", 
+		"RecContentType=text/html", 
+		"Referer=http://127.0.0.1:1080/cgi-bin/nav.pl?page=menu&in=flights", 
+		"Snapshot=t26.inf", 
+		"Mode=HTTP", 
+		LAST);
+
+	web_url("nav.pl_4", 
+		"URL=http://127.0.0.1:1080/cgi-bin/nav.pl?page=menu&in=itinerary", 
+		"Resource=0", 
+		"RecContentType=text/html", 
+		"Referer=http://127.0.0.1:1080/cgi-bin/welcome.pl?page=itinerary", 
+		"Snapshot=t27.inf", 
+		"Mode=HTTP", 
+		LAST);
+
+	web_url("in_itinerary.gif", 
+		"URL=http://127.0.0.1:1080/WebTours/images/in_itinerary.gif", 
+		"Resource=1", 
+		"RecContentType=image/gif", 
+		"Referer=http://127.0.0.1:1080/cgi-bin/nav.pl?page=menu&in=itinerary", 
+		"Snapshot=t28.inf", 
+		LAST);
+
+	web_url("itinerary.pl", 
+		"URL=http://127.0.0.1:1080/cgi-bin/itinerary.pl", 
+		"Resource=0", 
+		"RecContentType=text/html", 
+		"Referer=http://127.0.0.1:1080/cgi-bin/welcome.pl?page=itinerary", 
+		"Snapshot=t29.inf", 
+		"Mode=HTTP", 
+		LAST);
+
+	lr_end_transaction("itinerary",LR_AUTO);
+
+	lr_think_time(5);
+
+	lr_start_transaction("home");
+
+	web_url("Home Button", 
+		"URL=http://127.0.0.1:1080/cgi-bin/welcome.pl?page=menus", 
+		"Resource=0", 
+		"RecContentType=text/html", 
+		"Referer=http://127.0.0.1:1080/cgi-bin/nav.pl?page=menu&in=itinerary", 
+		"Snapshot=t32.inf", 
+		"Mode=HTTP", 
+		LAST);
+
+	web_url("nav.pl_5", 
+		"URL=http://127.0.0.1:1080/cgi-bin/nav.pl?page=menu&in=home", 
+		"Resource=0", 
+		"RecContentType=text/html", 
+		"Referer=http://127.0.0.1:1080/cgi-bin/welcome.pl?page=menus", 
+		"Snapshot=t33.inf", 
+		"Mode=HTTP", 
+		LAST);
+
+	web_url("login.pl_3", 
+		"URL=http://127.0.0.1:1080/cgi-bin/login.pl?intro=true", 
+		"Resource=0", 
+		"RecContentType=text/html", 
+		"Referer=http://127.0.0.1:1080/cgi-bin/welcome.pl?page=menus", 
+		"Snapshot=t34.inf", 
+		"Mode=HTTP", 
+		LAST);
+
+	lr_end_transaction("home",LR_AUTO);
+
+	lr_think_time(5);
+
+	lr_start_transaction("sign off");
+
+	web_url("SignOff Button", 
+		"URL=http://127.0.0.1:1080/cgi-bin/welcome.pl?signOff=1", 
+		"Resource=0", 
+		"RecContentType=text/html", 
+		"Referer=http://127.0.0.1:1080/cgi-bin/nav.pl?page=menu&in=home", 
+		"Snapshot=t35.inf", 
+		"Mode=HTTP", 
+		LAST);
+
+	web_url("nav.pl_6", 
+		"URL=http://127.0.0.1:1080/cgi-bin/nav.pl?in=home", 
+		"Resource=0", 
+		"RecContentType=text/html", 
+		"Referer=http://127.0.0.1:1080/cgi-bin/welcome.pl?signOff=1", 
+		"Snapshot=t36.inf", 
+		"Mode=HTTP", 
+		LAST);
+
+	web_url("home.html_2", 
+		"URL=http://127.0.0.1:1080/WebTours/home.html", 
+		"Resource=0", 
+		"Referer=http://127.0.0.1:1080/cgi-bin/welcome.pl?signOff=1", 
+		"Snapshot=t37.inf", 
+		"Mode=HTTP", 
+		LAST);
+
+	lr_end_transaction("sign off",LR_AUTO);
+
+	return 0;
+}

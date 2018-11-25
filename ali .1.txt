@@ -1,0 +1,12 @@
+Q #16. What are the different types goals in Goal-Oriented Scenario?
+Ans => LoadRunner has five different types of goals in Goal-Oriented Scenario. These are:
+
+    The number of concurrent Vusers
+    The number of hits per second
+    The number of transactions per second
+    The number of pages per minute
+    The transaction response time
+
+Q #25. What is a difference between pacing and think time?
+Ans => Pacing is the wait time between the action iterations whereas thinking the time is a wait time between the transactions.
+
